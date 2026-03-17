@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mini Picture</title>
+    <title>DarkCloud</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;500&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/appwrite@13.0.0"></script>
@@ -11,25 +11,20 @@
 <body>
 
 <nav class="navbar">
-    <h1 class="logo" onclick="location.reload()">Mini Picture</h1>
-
+    <h1 class="logo" onclick="location.reload()">🟣 DarkCloud</h1>
     <div class="nav-actions">
         <button class="album-btn" onclick="openAlbumManager()">📂 อัลบั้ม</button>
-
         <select id="filterType" onchange="loadFiles()">
             <option value="all">ทุกประเภท</option>
             <option value="image">รูปภาพ</option>
             <option value="video">วิดีโอ</option>
         </select>
-
         <select id="sortOrder" onchange="loadFiles()">
             <option value="newest">ล่าสุด</option>
             <option value="largest">ขนาดใหญ่</option>
         </select>
-
         <label for="fileInput" class="custom-file-upload" id="fileLabelBtn">📁 เลือกไฟล์</label>
         <input type="file" id="fileInput" onchange="updateFileName()">
-
         <button class="primary" onclick="uploadFile()">อัปโหลด</button>
     </div>
 </nav>
@@ -57,12 +52,34 @@
 
     <!-- Top bar -->
     <div class="modal-topbar">
-        <div class="modal-left-actions">
-            <span class="close-modal" onclick="closeModal()" title="ปิด (Esc)">✕</span>
-        </div>
+        <!-- left: close -->
+        <span class="close-modal" onclick="closeModal()" title="ปิด (Esc)">✕</span>
+
+        <!-- right: details + hamburger -->
         <div class="modal-right-actions">
             <div id="fileDetails" class="file-details"></div>
-            <button id="modalDeleteBtn" class="delete-btn-red">Delete</button>
+
+            <!-- Hamburger -->
+            <div class="menu-wrapper">
+                <button id="menuToggleBtn" class="hamburger-btn" onclick="toggleMenu(event)" title="เมนู">
+                    <span></span><span></span><span></span>
+                </button>
+                <div id="dropdownMenu" class="dropdown-menu">
+                    <button id="menuInfoBtn" class="dropdown-item">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="8"/><line x1="12" y1="12" x2="12" y2="16"/></svg>
+                        ดูรายละเอียด
+                    </button>
+                    <button id="menuDownloadBtn" class="dropdown-item">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                        ดาวน์โหลด
+                    </button>
+                    <div class="dropdown-divider"></div>
+                    <button id="menuDeleteBtn" class="dropdown-item danger">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+                        ลบไฟล์
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -77,6 +94,15 @@
 
     <!-- Counter -->
     <div id="fileCounter"></div>
+
+    <!-- Info Panel (slides up from bottom) -->
+    <div id="infoPanel" class="info-panel">
+        <div class="info-panel-header">
+            <span>รายละเอียดไฟล์</span>
+            <span class="info-close" onclick="closeInfoPanel()">✕</span>
+        </div>
+        <div id="infoPanelContent"></div>
+    </div>
 </div>
 
 <script src="script.js"></script>
