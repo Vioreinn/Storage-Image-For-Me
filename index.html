@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Picture</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/appwrite@13.0.0"></script>
+</head>
+<body>
+
+<nav class="navbar">
+    <h1 class="logo" onclick="location.reload()">Mini Picture</h1>
+
+    <div class="nav-actions">
+        <button class="album-btn" onclick="openAlbumManager()">📂 อัลบั้ม</button>
+
+        <select id="filterType" onchange="loadFiles()">
+            <option value="all">ทุกประเภท</option>
+            <option value="image">รูปภาพ</option>
+            <option value="video">วิดีโอ</option>
+        </select>
+
+        <select id="sortOrder" onchange="loadFiles()">
+            <option value="newest">ล่าสุด</option>
+            <option value="largest">ขนาดใหญ่</option>
+        </select>
+
+        <label for="fileInput" class="custom-file-upload" id="fileLabelBtn">📁 เลือกไฟล์</label>
+        <input type="file" id="fileInput" onchange="updateFileName()">
+
+        <button class="primary" onclick="uploadFile()">อัปโหลด</button>
+    </div>
+</nav>
+
+<div class="container">
+    <p id="status"></p>
+    <div class="gallery" id="gallery"></div>
+</div>
+
+<!-- Album Overlay -->
+<div id="albumOverlay" class="full-overlay">
+    <span class="close-overlay" onclick="closeAlbumManager()">&times;</span>
+    <div class="overlay-content">
+        <h2>📂 อัลบั้มของฉัน</h2>
+        <div class="album-controls">
+            <input type="text" id="newAlbumName" placeholder="ชื่ออัลบั้มใหม่...">
+            <button class="primary" onclick="createNewAlbum()">+ สร้างอัลบั้ม</button>
+        </div>
+        <div id="albumGrid" class="album-grid"></div>
+    </div>
+</div>
+
+<!-- File Modal -->
+<div id="fileModal" class="modal" onclick="closeModalOutside(event)">
+
+    <!-- Top bar -->
+    <div class="modal-topbar">
+        <div class="modal-left-actions">
+            <span class="close-modal" onclick="closeModal()" title="ปิด (Esc)">✕</span>
+        </div>
+        <div class="modal-right-actions">
+            <div id="fileDetails" class="file-details"></div>
+            <button id="modalDeleteBtn" class="delete-btn-red">Delete</button>
+        </div>
+    </div>
+
+    <!-- Side arrows -->
+    <div class="nav-arrows">
+        <button class="arrow-btn" onclick="prevFile(event)" title="ก่อนหน้า (←)">❮</button>
+        <button class="arrow-btn" onclick="nextFile(event)" title="ถัดไป (→)">❯</button>
+    </div>
+
+    <!-- Media -->
+    <div id="modalBody" class="modal-body-container"></div>
+
+    <!-- Counter -->
+    <div id="fileCounter"></div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
